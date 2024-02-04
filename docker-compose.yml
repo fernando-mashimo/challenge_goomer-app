@@ -16,3 +16,4 @@ services:
       - SYS_NICE
     environment:
       - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres

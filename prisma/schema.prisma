@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,61 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id           String                   @id @default(uuid())
+  name         String                   @unique
+  address      String                   @unique
+  photo        String
+  products     RestaurantProduct[]
+  openingHours RestaurantOpeningHours[]
+}
+
+model RestaurantProduct {
+  id           String                  @id @default(uuid())
+  name         String
+  price        Float
+  photo        String
+  category     Category
+  restaurantId String
+  sales        RestaurantProductSale[]
+  restaurant   Restaurant              @relation(fields: [restaurantId], references: [id])
+}
+
+model RestaurantProductSale {
+  id                  String            @id @default(uuid())
+  saleDescription     String
+  salePrice           Float
+  saleDays            Day
+  saleHours           String
+  restaurantProductId String
+  restaurantProduct   RestaurantProduct @relation(fields: [restaurantProductId], references: [id])
+}
+
+model RestaurantOpeningHours {
+  id           String     @id @default(uuid())
+  day          Day
+  openingHour  String
+  closingHour  String
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+enum Category {
+  Starter
+  Main
+  Dessert
+  Drink
+  Other
+}
+
+enum Day {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
 }
