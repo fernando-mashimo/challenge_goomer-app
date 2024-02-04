@@ -31,67 +31,18 @@ async function main() {
     },
   });
 
-  await prisma.restaurantOpeningHours.create({
-    data: {
-      day: Day.Monday,
-      openingHour: '09:00',
-      closingHour: '17:00',
-      restaurantId: restaurant.id,
-    },
-  });
+  const openingHoursData = [
+    { day: Day.Monday, openingHour: '09:00', closingHour: '17:00' },
+    { day: Day.Tuesday, openingHour: '09:00', closingHour: '17:00' },
+    { day: Day.Wednesday, openingHour: '09:00', closingHour: '17:00' },
+    { day: Day.Thursday, openingHour: '09:00', closingHour: '17:00' },
+    { day: Day.Friday, openingHour: '09:00', closingHour: '17:00' },
+    { day: Day.Saturday, openingHour: '09:00', closingHour: '17:00' },
+    { day: Day.Sunday, openingHour: 'Closed', closingHour: 'Closed' },
+  ].map((hours) => ({ ...hours, restaurantId: restaurant.id }));
 
-  await prisma.restaurantOpeningHours.create({
-    data: {
-      day: Day.Tuesday,
-      openingHour: '09:00',
-      closingHour: '17:00',
-      restaurantId: restaurant.id,
-    },
-  });
-
-  await prisma.restaurantOpeningHours.create({
-    data: {
-      day: Day.Wednesday,
-      openingHour: '09:00',
-      closingHour: '17:00',
-      restaurantId: restaurant.id,
-    },
-  });
-
-  await prisma.restaurantOpeningHours.create({
-    data: {
-      day: Day.Thursday,
-      openingHour: '09:00',
-      closingHour: '17:00',
-      restaurantId: restaurant.id,
-    },
-  });
-
-  await prisma.restaurantOpeningHours.create({
-    data: {
-      day: Day.Friday,
-      openingHour: '09:00',
-      closingHour: '17:00',
-      restaurantId: restaurant.id,
-    },
-  });
-
-  await prisma.restaurantOpeningHours.create({
-    data: {
-      day: Day.Saturday,
-      openingHour: '09:00',
-      closingHour: '17:00',
-      restaurantId: restaurant.id,
-    },
-  });
-
-  await prisma.restaurantOpeningHours.create({
-    data: {
-      day: Day.Sunday,
-      openingHour: 'Closed',
-      closingHour: 'Closed',
-      restaurantId: restaurant.id,
-    },
+  await prisma.restaurantOpeningHours.createMany({
+    data: openingHoursData,
   });
 
   console.log('Seed complete');
