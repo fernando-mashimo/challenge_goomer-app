@@ -8,37 +8,37 @@ datasource db {
 }
 
 model Restaurant {
-  id        String   @id @default(uuid())
-  name      String   @unique
-  address   String   @unique
-  photo     String
-  products  RestaurantProduct[]
+  id           String                   @id @default(uuid())
+  name         String                   @unique
+  address      String                   @unique
+  photo        String
+  products     RestaurantProduct[]
   openingHours RestaurantOpeningHours[]
 }
 
 model RestaurantProduct {
-  id           String   @id @default(uuid())
+  id           String                  @id @default(uuid())
   name         String
   price        Float
   photo        String
   category     Category
   restaurantId String
   sales        RestaurantProductSale[]
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant              @relation(fields: [restaurantId], references: [id])
 }
 
 model RestaurantProductSale {
-  id               String   @id @default(uuid())
-  saleDescription    String
-  salePrice         Float
-  saleDays          Day
-  saleHours         String
+  id                  String            @id @default(uuid())
+  saleDescription     String
+  salePrice           Float
+  saleDays            Day
+  saleHours           String
   restaurantProductId String
-  restaurantProduct RestaurantProduct @relation(fields: [restaurantProductId], references: [id])
+  restaurantProduct   RestaurantProduct @relation(fields: [restaurantProductId], references: [id])
 }
 
 model RestaurantOpeningHours {
-  id           String   @id @default(uuid())
+  id           String     @id @default(uuid())
   day          Day
   openingHour  String
   closingHour  String
